@@ -1,0 +1,38 @@
+<div class="w-100 d-flex justify-content-end pr-5">
+  <button class="mx-5 btn btn-default" (click)="handleAddClick()" >Add</button> 
+  <button class="mx-5 btn btn-default" (click)="handleRemoveAllClick()">Remove all</button>
+</div>
+
+
+<ul >
+  <li *ngFor="let image of images, index as i" class="my-2 "
+    >
+    <div class="d-flex justify-content-between w-100">
+      <span class="row w-75">
+        <span class="badge col-3">ID : {{image.id}}</span> 
+        <input 
+          class="col-3 form-control" 
+          id="title" 
+          name="title"
+          [(ngModel)]="image.title" 
+          >
+        <input  class="col-6" #file type="file"  accept='.jpeg,.jpg' (change)="preview(file.files, i)" />
+      </span>
+      <button class="btn btn-outline-danger w-25" (click)="handleRemoveImageClick(i)" *ngIf="!disableRemove">
+        <i class="far fa-trash-alt"></i>
+      </button>
+    </div>
+<div class="w-100" *ngIf="image.title.length >= 20">
+  <div class="text-danger ml-5">
+    Title need to be less than 20.
+  </div>
+</div>
+<div class="w-100" *ngIf="image.previewUrl === undefined">
+  <div class="text-danger ml-5">
+    Only accept file jpg and jpeg.
+  </div>
+</div>
+  </li>
+</ul>
+
+<app-preview [imageList]="images"></app-preview>
